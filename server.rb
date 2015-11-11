@@ -26,7 +26,7 @@ class Goku
   end
 
   def increase_power_level
-    @power_level += 1
+    @power_level += 10
   end
 
   def current_energy
@@ -34,7 +34,7 @@ class Goku
   end
 
   def reduce_energy
-    @power_level -= 1 if @power_level > 0
+    @power_level -= 100 if @power_level > 100
   end
 end
 
@@ -45,9 +45,6 @@ EM.run {
     client = Client.new(ws)
 
     ws.onopen { |handshake|
-      puts "Goku, someone is tranfering your their energy."
-
-      ws.send "You are now connected to Goku."
     }
 
     ws.onclose {
@@ -61,12 +58,16 @@ EM.run {
   end
 
   EventMachine.add_periodic_timer(1) {
+    system "clear"
     puts "Current energy: #{goku.current_energy}"
     puts "Current users: #{Client.all_offspring.count}"
-    if goku.current_energy > 200
+    puts "Progress"
+    if goku.current_energy > 9000
+      puts "ITS OVER 9000!"
       puts "WE BEAT FREEZA"
       EM.stop
     else
+      puts "["+"="*(goku.current_energy/900)+" "*((9000-goku.current_energy)/900)+"]"
       goku.reduce_energy
     end
   }
