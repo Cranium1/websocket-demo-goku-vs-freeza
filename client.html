@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+Goku Path:
+<input id="uri" type="text"><br>
+<input id="submit" type="submit" value="SEND ENERGY">
+
+<script>
+	function startSocket() {
+		var url = document.getElementById("uri").value
+
+		var websocket = new WebSocket(url);
+		websocket.onopen = function(evt) {
+
+		};
+		websocket.onclose = function(evt) {
+
+		};
+
+		websocket.onmessage = function(evt) {
+			if (evt.data == "") {
+
+			}
+		};
+
+		setInterval(function () {
+			websocket.send("send energy");
+		}, 1000);		
+	}
+
+	document.getElementById("submit").addEventListener("click", startSocket);
+
+</script>
